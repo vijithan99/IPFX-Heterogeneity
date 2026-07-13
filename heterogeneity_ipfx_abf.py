@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Wed Feb 25 14:37:35 2026
@@ -34,7 +35,7 @@ from ipfx.stimulus_protocol_analysis import LongSquareAnalysis
 
 current_dir = os.getcwd()
 
-input_abf_root = os.path.join(current_dir, "Human ZD")
+input_abf_root = os.path.join(current_dir, "Subiculum")
 patient_data_path = os.path.join(current_dir, "patientData", "patientData.csv")
 
 clamp_modes = ["VoltageClamp", "CurrentClamp", ""]
@@ -46,6 +47,9 @@ species = "human"
 
 # Keep only sweeps with stimulation amplitude <= 350 pA
 MAX_STIM_AMP_PA = 350.0
+
+# Keep only sweeps with stimulation amplitude <= -200 pA
+MIN_STIM_AMP_PA = -200.0
 
 # Tolerance between baseline and RMP for when RMP correction is needed
 BASELINE_TOLERANCE= 10.0 # mV
@@ -524,6 +528,13 @@ for dirpath, dirnames, filenames in os.walk(input_abf_root):
                 continue
             
             if stim_amp is None:
+                continue
+            
+            if stim_amp <= MIN_STIM_AMP_PA:
+                print(
+                    f"{filename} sweep {i}: excluded because "
+                    f"stim_amp={stim_amp:.2f} pA <= {MIN_STIM_AMP_PA} pA"
+                )
                 continue
             
             if stim_amp > MAX_STIM_AMP_PA:
