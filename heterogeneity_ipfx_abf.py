@@ -49,7 +49,7 @@ species = "human"
 MAX_STIM_AMP_PA = 350.0
 
 # Keep only sweeps with stimulation amplitude <= -200 pA
-MIN_STIM_AMP_PA = -200.0
+MIN_STIM_AMP_PA = -250.0
 
 # Tolerance between baseline and RMP for when RMP correction is needed
 BASELINE_TOLERANCE= 10.0 # mV
